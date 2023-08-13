@@ -10,7 +10,6 @@ const PlayScreen = () => {
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
   const [winner, setWinner] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
   const [gameWinner, setGameWinner] = useState("");
   console.log(mode);
 
@@ -72,6 +71,7 @@ const PlayScreen = () => {
             alert("player1 Wins");
             window.location.reload();
           }
+          setGameWinner("X");
           addScore(setPlayer1Score(player1Score + 1));
           return;
         }
@@ -81,9 +81,12 @@ const PlayScreen = () => {
             window.location.reload();
           }
           addScore(setPlayer2Score(player2Score + 1));
-          Over();
+          setGameWinner("O");
           return;
         }
+      }
+      if (checkDraw(squares)) {
+        setDraw(true);
       }
     }
   }
@@ -101,6 +104,7 @@ const PlayScreen = () => {
     return (
       <td
         className="border-2 text-xl border-gray-200 h-32 w-32 mr-6 text-center"
+        disabled={winner}
         onClick={() => handleClick(num)}
       >
         <strong>{board[num]}</strong>
@@ -110,6 +114,7 @@ const PlayScreen = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
+      <p className="text-3xl my-10">Tic-Tac-Toe Game!</p>
       <div className="flex w-4/6 mx-auto justify-evenly mb-5">
         <p className="flex-2">
           Player 1 Score: <strong>{player1Score}</strong>
@@ -143,12 +148,26 @@ const PlayScreen = () => {
       </table>
       <div className="row">
         {winner && (
-          <button
-            onClick={handleRestart}
-            className="text-white mt-7 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
-          >
-            Restart
-          </button>
+          <>
+            <p>{gameWinner} is the Winner</p>
+            <button
+              onClick={handleRestart}
+              className="text-white mt-7 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
+            >
+              Restart
+            </button>
+          </>
+        )}
+        {!winner && draw && (
+          <>
+            <p>It's a Draw</p>
+            <button
+              onClick={handleRestart}
+              className="text-white mt-7 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
+            >
+              Restart
+            </button>
+          </>
         )}
       </div>
     </div>
