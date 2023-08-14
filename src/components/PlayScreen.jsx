@@ -128,28 +128,30 @@ const PlayScreen = () => {
         <strong>{turn} </strong> Turn
       </p>
       <table>
-        <tbody>
-          <tr>
-            <Cells num={0} />
-            <Cells num={1} />
-            <Cells num={2} />
-          </tr>
-          <tr>
-            <Cells num={3} />
-            <Cells num={4} />
-            <Cells num={5} />
-          </tr>
-          <tr>
-            <Cells num={6} />
-            <Cells num={7} />
-            <Cells num={8} />
-          </tr>
-        </tbody>
+        {!winner && (
+          <tbody>
+            <tr>
+              <Cells num={0} />
+              <Cells num={1} />
+              <Cells num={2} />
+            </tr>
+            <tr>
+              <Cells num={3} />
+              <Cells num={4} />
+              <Cells num={5} />
+            </tr>
+            <tr>
+              <Cells num={6} />
+              <Cells num={7} />
+              <Cells num={8} />
+            </tr>
+          </tbody>
+        )}
       </table>
-      <div className="row">
+      <div className="flex flex-col justify-center items-center">
         {winner && (
           <>
-            <p>{gameWinner} is the Winner</p>
+            <p className="text-2xl">{gameWinner} is the Winner</p>
             <button
               onClick={handleRestart}
               className="text-white mt-7 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
